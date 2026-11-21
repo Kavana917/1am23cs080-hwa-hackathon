@@ -23,10 +23,32 @@ const ICE = [
 
 export function Hero() {
   const heroRef = useRef(null);
+  const stageRef = useRef(null);
+  const productRef = useRef(null);
+  const shopRef = useRef(null);
   const hideTimer = useRef(0);
   const [productHover, setProductHover] = useState(false);
 
-  const showShop = () => {
+  const positionShop = (clientX, clientY) => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const rect = stage.getBoundingClientRect();
+    const button = shopRef.current;
+    const halfW = button ? button.offsetWidth / 2 : 60;
+    const halfH = button ? button.offsetHeight / 2 : 22;
+    const x = Math.min(Math.max(clientX - rect.left, halfW + 8), rect.width - halfW - 8);
+    const y = Math.min(Math.max(clientY - rect.top, halfH + 8), rect.height - halfH - 8);
+    stage.style.setProperty("--shop-x", `${x}px`);
+    stage.style.setProperty("--shop-y", `${y}px`);
+  };
+
+  const showShop = (event) => {
+    if (event && typeof event.clientX === "number") {
+      positionShop(event.clientX, event.clientY);
+    } else if (productRef.current) {
+      const rect = productRef.current.getBoundingClientRect();
+      positionShop(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
     hideTimer.current = 0;
     setProductHover(true);
@@ -109,7 +131,7 @@ export function Hero() {
       </div>
 
       <div className="container hero__inner">
-        <div className="hero__stage">
+        <div className="hero__stage" ref={stageRef}>
           <div className="stage__glow" aria-hidden="true" />
 
           <div className="hero__ice-layer" aria-hidden="true">
@@ -144,6 +166,7 @@ export function Hero() {
           </h1>
 
           <img
+            ref={productRef}
             className="stage__product"
             src="/assets/rime-hero.webp"
             alt="Rime frozen lick and hydration column for dogs, with frosted honeycomb sleeve and stainless steel base"
@@ -153,15 +176,18 @@ export function Hero() {
             decoding="async"
             tabIndex="0"
             onPointerEnter={showShop}
+            onPointerMove={(event) => positionShop(event.clientX, event.clientY)}
             onPointerLeave={hideShop}
             onFocus={showShop}
             onBlur={hideShop}
           />
 
           <a
+            ref={shopRef}
             className="btn btn--dark hero__shop"
             href="#shop"
             onPointerEnter={showShop}
+            onPointerMove={(event) => positionShop(event.clientX, event.clientY)}
             onPointerLeave={hideShop}
             onFocus={showShop}
             onBlur={hideShop}
