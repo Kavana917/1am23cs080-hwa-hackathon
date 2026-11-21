@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon.jsx";
 
 /* Larger, varied ice at the edges. Depth controls parallax speed/direction. */
@@ -23,6 +23,19 @@ const ICE = [
 
 export function Hero() {
   const heroRef = useRef(null);
+  const hideTimer = useRef(0);
+  const [productHover, setProductHover] = useState(false);
+
+  const showShop = () => {
+    if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    hideTimer.current = 0;
+    setProductHover(true);
+  };
+
+  const hideShop = () => {
+    if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => setProductHover(false), 180);
+  };
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -80,11 +93,16 @@ export function Hero() {
       hero.removeEventListener("pointerleave", handleLeave);
       window.removeEventListener("blur", handleLeave);
       if (frame) window.cancelAnimationFrame(frame);
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
   }, []);
 
   return (
-    <section className="hero" id="top" ref={heroRef}>
+    <section
+      className={`hero${productHover ? " is-product-hover" : ""}`}
+      id="top"
+      ref={heroRef}
+    >
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__grid" />
         <div className="hero__glow" />
@@ -133,9 +151,21 @@ export function Hero() {
             height="1185"
             fetchpriority="high"
             decoding="async"
+            tabIndex="0"
+            onPointerEnter={showShop}
+            onPointerLeave={hideShop}
+            onFocus={showShop}
+            onBlur={hideShop}
           />
 
-          <a className="btn btn--dark hero__shop" href="#shop">
+          <a
+            className="btn btn--dark hero__shop"
+            href="#shop"
+            onPointerEnter={showShop}
+            onPointerLeave={hideShop}
+            onFocus={showShop}
+            onBlur={hideShop}
+          >
             Shop Now <Icon name="arrow" />
           </a>
         </div>
