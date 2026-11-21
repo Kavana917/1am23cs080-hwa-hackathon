@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Icon } from "./Icon.jsx";
+import StrokeText from "./StrokeText.jsx";
 
 /* Larger, varied ice at the edges. Depth controls parallax speed/direction. */
 const ICE = [
@@ -27,7 +28,11 @@ export function Hero() {
   const productRef = useRef(null);
   const shopRef = useRef(null);
   const hideTimer = useRef(0);
+  const taglineRef = useRef(null);
+  const meaningCardRef = useRef(null);
   const [productHover, setProductHover] = useState(false);
+  const [meaningOpen, setMeaningOpen] = useState(false);
+  const [connector, setConnector] = useState({ x: 0, y: 0, length: 0, angle: 0 });
 
   const positionShop = (clientX, clientY) => {
     const stage = stageRef.current;
@@ -58,6 +63,51 @@ export function Hero() {
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
     hideTimer.current = window.setTimeout(() => setProductHover(false), 180);
   };
+
+  /* Measure the dotted connector between the name and the meaning card. */
+  useLayoutEffect(() => {
+    const update = () => {
+      const stage = stageRef.current;
+      const tagline = taglineRef.current;
+      const card = meaningCardRef.current;
+      if (!stage || !tagline || !card) return;
+
+      const s = stage.getBoundingClientRect();
+      const t = tagline.getBoundingClientRect();
+      const c = card.getBoundingClientRect();
+      const startX = t.right - s.left - 4;
+      const startY = t.top + t.height * 0.55 - s.top;
+      const endX = c.left - s.left + 10;
+      const endY = c.top + 30 - s.top;
+      const dx = endX - startX;
+      const dy = endY - startY;
+      const next = {
+        x: startX,
+        y: startY,
+        length: Math.max(0, Math.hypot(dx, dy)),
+        angle: (Math.atan2(dy, dx) * 180) / Math.PI,
+      };
+
+      setConnector((prev) =>
+        Math.abs(prev.x - next.x) < 0.5 &&
+        Math.abs(prev.y - next.y) < 0.5 &&
+        Math.abs(prev.length - next.length) < 0.5 &&
+        Math.abs(prev.angle - next.angle) < 0.5
+          ? prev
+          : next
+      );
+    };
+
+    update();
+    const frame = window.requestAnimationFrame(update);
+    window.addEventListener("resize", update);
+    document.fonts?.ready?.then(update).catch(() => {});
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -161,9 +211,73 @@ export function Hero() {
           </div>
 
           <h1 className="hero__title">
-            <span className="hero__name">Rime</span>
-            <span className="hero__tagline">Hydration in its prime.</span>
+            <button
+              type="button"
+              className="hero__name-trigger"
+              onPointerEnter={() => setMeaningOpen(true)}
+              onPointerLeave={() => setMeaningOpen(false)}
+              onFocus={() => setMeaningOpen(true)}
+              onBlur={() => setMeaningOpen(false)}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") setMeaningOpen(false);
+              }}
+              aria-expanded={meaningOpen}
+              aria-describedby="rime-name-meaning"
+            >
+              <StrokeText
+                text="RIME"
+                className="hero__name"
+                strokeColor="rgba(46, 111, 124, 0.92)"
+                fillColor="#2a1418"
+                strokeWidth={1.5}
+                drawDuration={1.05}
+                fillDelay={0.12}
+                stagger={0.055}
+                ease="power2.out"
+                trigger="mount"
+                fillMode="wipe"
+                wipeFrom="left"
+                fontSize={160}
+                fontWeight={600}
+                fontFamily='"Inter Tight", "Helvetica Neue", Arial, sans-serif'
+                letterSpacing={-8}
+              />
+              <span ref={taglineRef} className="hero__tagline">Hydration in its prime.</span>
+            </button>
           </h1>
+
+          <span
+            className={`hero__meaning-line${meaningOpen ? " is-open" : ""}`}
+            style={{
+              left: `${connector.x}px`,
+              top: `${connector.y}px`,
+              width: `${connector.length}px`,
+              transform: `rotate(${connector.angle}deg)`,
+            }}
+            aria-hidden="true"
+          />
+
+          <div
+            ref={meaningCardRef}
+            className={`hero__meaning${meaningOpen ? " is-open" : ""}`}
+            id="rime-name-meaning"
+            role="tooltip"
+            aria-hidden={!meaningOpen}
+          >
+            <div className="hero__meaning-card">
+              <span className="hero__meaning-kicker">Why we kept the name</span>
+              <p>
+                “Rime most commonly refers to a white, granular crust of ice (frost)
+                formed when freezing or supercooled water droplets freeze on contact
+                with surfaces.”
+              </p>
+              <span className="hero__meaning-source">Source: Wikipedia</span>
+              <p className="hero__meaning-note">
+                That frosty crust is exactly the feeling behind Rime — a cold lick, a
+                chilled sip, and one good 3–4 hour session.
+              </p>
+            </div>
+          </div>
 
           <img
             ref={productRef}
