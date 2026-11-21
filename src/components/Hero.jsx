@@ -228,7 +228,7 @@ export function Hero() {
               <StrokeText
                 text="RIME"
                 className="hero__name"
-                strokeColor="rgba(46, 111, 124, 0.92)"
+                strokeColor="#2a1418"
                 fillColor="#2a1418"
                 strokeWidth={1.5}
                 drawDuration={1.05}
