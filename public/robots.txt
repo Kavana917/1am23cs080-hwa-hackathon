@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://1am23cs080-hwa-hackathon.vercel.app/sitemap.xml

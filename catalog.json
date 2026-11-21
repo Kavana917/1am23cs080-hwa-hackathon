@@ -1,0 +1,65 @@
+{
+  "currency": "INR",
+  "freeShippingThreshold": 4500,
+  "shipping": {
+    "standard": {
+      "label": "Standard delivery",
+      "detail": "3–5 business days",
+      "price": 99,
+      "freeOver": 4500
+    },
+    "express": {
+      "label": "Express 2-day delivery",
+      "detail": "Ordered before 2pm IST",
+      "price": 199,
+      "freeOver": null
+    }
+  },
+  "products": {
+    "RIME-STD": {
+      "name": "Rime™ Standard",
+      "short": "Standard 18 oz",
+      "meta": "18 oz / 530 ml · small & medium dogs",
+      "price": 3999,
+      "mrp": 6000,
+      "color": true,
+      "kind": "column"
+    },
+    "RIME-XL": {
+      "name": "Rime™ XL",
+      "short": "XL 28 oz",
+      "meta": "28 oz / 830 ml · large & giant dogs",
+      "price": 4999,
+      "mrp": 7500,
+      "color": true,
+      "kind": "column"
+    },
+    "RIME-BUNDLE": {
+      "name": "The “Back-to-Back” Bundle",
+      "short": "Back-to-Back Bundle",
+      "meta": "Standard column + spare rod + 2 sleeves",
+      "price": 5499,
+      "mrp": 8700,
+      "color": true,
+      "kind": "bundle"
+    },
+    "RIME-ROD": {
+      "name": "Spare Sealed Chill Rod",
+      "short": "Spare Chill Rod",
+      "meta": "Factory-sealed thermal-gel core",
+      "price": 999,
+      "mrp": 1500,
+      "color": false,
+      "kind": "rod"
+    },
+    "RIME-SLEEVE": {
+      "name": "Replacement Honeycomb Sleeve",
+      "short": "Replacement Sleeve",
+      "meta": "Standard / XL fit",
+      "price": 449,
+      "mrp": 600,
+      "color": false,
+      "kind": "sleeve"
+    }
+  }
+}
