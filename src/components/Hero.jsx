@@ -3,22 +3,22 @@ import { Icon } from "./Icon.jsx";
 
 /* Larger, varied ice at the edges. Depth controls parallax speed/direction. */
 const ICE = [
-  { n: 1, w: 320, x: "-3%", y: "8%", r: -18, blur: "0px", o: 0.9, front: true, depth: 0.85 },
-  { n: 2, w: 210, x: "10%", y: "34%", r: 14, blur: "5px", o: 0.6, front: false, depth: 0.35 },
-  { n: 3, w: 270, x: "-5%", y: "62%", r: 26, blur: "3px", o: 0.7, front: true, depth: 0.55 },
-  { n: 4, w: 230, x: "8%", y: "86%", r: -11, blur: "0px", o: 0.82, front: true, depth: 0.7 },
-  { n: 5, w: 360, x: "80%", y: "-4%", r: -12, blur: "0px", o: 0.88, front: true, depth: 0.9 },
-  { n: 6, w: 220, x: "92%", y: "26%", r: 19, blur: "6px", o: 0.55, front: false, depth: 0.4 },
-  { n: 7, w: 300, x: "84%", y: "58%", r: -23, blur: "0px", o: 0.86, front: true, depth: 0.75 },
-  { n: 8, w: 250, x: "88%", y: "84%", r: 15, blur: "3px", o: 0.62, front: false, depth: 0.6 },
-  { n: 9, w: 180, x: "26%", y: "-6%", r: 9, blur: "4px", o: 0.58, front: false, depth: 0.3 },
-  { n: 10, w: 200, x: "63%", y: "-8%", r: -15, blur: "0px", o: 0.78, front: true, depth: 0.5 },
-  { n: 11, w: 190, x: "34%", y: "102%", r: 22, blur: "5px", o: 0.56, front: false, depth: -0.4 },
-  { n: 12, w: 220, x: "68%", y: "104%", r: -8, blur: "0px", o: 0.8, front: true, depth: 0.55 },
-  { n: 13, w: 160, x: "0%", y: "48%", r: 31, blur: "6px", o: 0.5, front: false, depth: -0.28 },
-  { n: 14, w: 180, x: "100%", y: "46%", r: -27, blur: "4px", o: 0.54, front: false, depth: -0.33 },
-  { n: 15, w: 150, x: "15%", y: "13%", r: -21, blur: "0px", o: 0.72, front: true, depth: 0.42 },
-  { n: 16, w: 170, x: "76%", y: "13%", r: 28, blur: "5px", o: 0.52, front: false, depth: 0.36 },
+  { n: 1, w: 320, x: "-11%", y: "2%", r: -34, blur: "0px", o: 0.9, front: true, depth: 0.85 },
+  { n: 2, w: 210, x: "4%", y: "40%", r: 18, blur: "5px", o: 0.6, front: false, depth: 0.35 },
+  { n: 3, w: 270, x: "-12%", y: "70%", r: 47, blur: "3px", o: 0.7, front: true, depth: 0.55 },
+  { n: 4, w: 230, x: "2%", y: "96%", r: -12, blur: "0px", o: 0.82, front: true, depth: 0.7 },
+  { n: 5, w: 360, x: "88%", y: "-12%", r: 62, blur: "0px", o: 0.88, front: true, depth: 0.9 },
+  { n: 6, w: 220, x: "100%", y: "20%", r: -28, blur: "6px", o: 0.55, front: false, depth: 0.4 },
+  { n: 7, w: 300, x: "92%", y: "66%", r: 15, blur: "0px", o: 0.86, front: true, depth: 0.75 },
+  { n: 8, w: 250, x: "96%", y: "94%", r: -51, blur: "3px", o: 0.62, front: false, depth: 0.6 },
+  { n: 9, w: 180, x: "20%", y: "-12%", r: 37, blur: "4px", o: 0.58, front: false, depth: 0.3 },
+  { n: 10, w: 200, x: "72%", y: "-14%", r: -19, blur: "0px", o: 0.78, front: true, depth: 0.5 },
+  { n: 11, w: 190, x: "30%", y: "112%", r: 54, blur: "5px", o: 0.56, front: false, depth: -0.4 },
+  { n: 12, w: 220, x: "76%", y: "114%", r: -41, blur: "0px", o: 0.8, front: true, depth: 0.55 },
+  { n: 13, w: 160, x: "-8%", y: "56%", r: 23, blur: "6px", o: 0.5, front: false, depth: -0.28 },
+  { n: 14, w: 180, x: "108%", y: "52%", r: -63, blur: "4px", o: 0.54, front: false, depth: -0.33 },
+  { n: 15, w: 150, x: "8%", y: "6%", r: 11, blur: "0px", o: 0.72, front: true, depth: 0.42 },
+  { n: 16, w: 170, x: "84%", y: "4%", r: 72, blur: "5px", o: 0.52, front: false, depth: 0.36 },
 ];
 
 export function Hero() {
