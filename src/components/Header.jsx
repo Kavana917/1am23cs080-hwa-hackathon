@@ -29,18 +29,6 @@ export function Nav() {
   return (
     <header className="nav" id="nav">
       <div className="nav__inner">
-        <a className="brand" href="#top" aria-label="Rime home">
-          <span className="brand__mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32">
-              <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z" fill="none" stroke="currentColor" strokeWidth="1.4" />
-              <rect x="14.6" y="9" width="2.8" height="12" rx="1.4" fill="currentColor" />
-              <path d="M16 23.5c1.8 2 2.7 3.1 2.7 4.2a2.7 2.7 0 0 1-5.4 0c0-1.1.9-2.2 2.7-4.2Z" fill="currentColor" />
-            </svg>
-          </span>
-          <span className="brand__word">RIME</span>
-          <sup>™</sup>
-        </a>
-
         <nav className="nav__links" aria-label="Primary">
           <a href="#how">How it works</a>
           <a href="#design">Design</a>
