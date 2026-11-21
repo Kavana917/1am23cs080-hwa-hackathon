@@ -28,11 +28,11 @@ export function Hero() {
   const productRef = useRef(null);
   const shopRef = useRef(null);
   const hideTimer = useRef(0);
-  const taglineRef = useRef(null);
+  const nameRef = useRef(null);
   const meaningCardRef = useRef(null);
   const [productHover, setProductHover] = useState(false);
   const [meaningOpen, setMeaningOpen] = useState(false);
-  const [connector, setConnector] = useState({ x: 0, y: 0, length: 0, angle: 0 });
+  const [connector, setConnector] = useState({ x: 0, y: 0, horizontal: 0, cornerX: 0, vertical: 0 });
 
   const positionShop = (clientX, clientY) => {
     const stage = stageRef.current;
@@ -64,35 +64,35 @@ export function Hero() {
     hideTimer.current = window.setTimeout(() => setProductHover(false), 180);
   };
 
-  /* Measure the dotted connector between the name and the meaning card. */
+  /* Measure an L-shaped connector from the name to the meaning card. */
   useLayoutEffect(() => {
     const update = () => {
       const stage = stageRef.current;
-      const tagline = taglineRef.current;
+      const nameSvg = nameRef.current?.querySelector(".hero__name svg");
       const card = meaningCardRef.current;
-      if (!stage || !tagline || !card) return;
+      if (!stage || !nameSvg || !card) return;
 
       const s = stage.getBoundingClientRect();
-      const t = tagline.getBoundingClientRect();
+      const n = nameSvg.getBoundingClientRect();
       const c = card.getBoundingClientRect();
-      const startX = t.right - s.left - 4;
-      const startY = t.top + t.height * 0.55 - s.top;
-      const endX = c.left - s.left + 10;
-      const endY = c.top + 30 - s.top;
-      const dx = endX - startX;
-      const dy = endY - startY;
+      const startX = n.right - s.left - Math.min(14, n.width * 0.05);
+      const startY = n.top + n.height * 0.5 - s.top;
+      const cornerX = c.left + c.width * 0.5 - s.left;
+      const endY = c.top - 4 - s.top;
       const next = {
         x: startX,
         y: startY,
-        length: Math.max(0, Math.hypot(dx, dy)),
-        angle: (Math.atan2(dy, dx) * 180) / Math.PI,
+        horizontal: Math.max(0, cornerX - startX),
+        cornerX,
+        vertical: Math.max(0, endY - startY),
       };
 
       setConnector((prev) =>
         Math.abs(prev.x - next.x) < 0.5 &&
         Math.abs(prev.y - next.y) < 0.5 &&
-        Math.abs(prev.length - next.length) < 0.5 &&
-        Math.abs(prev.angle - next.angle) < 0.5
+        Math.abs(prev.horizontal - next.horizontal) < 0.5 &&
+        Math.abs(prev.cornerX - next.cornerX) < 0.5 &&
+        Math.abs(prev.vertical - next.vertical) < 0.5
           ? prev
           : next
       );
@@ -212,6 +212,7 @@ export function Hero() {
 
           <h1 className="hero__title">
             <button
+              ref={nameRef}
               type="button"
               className="hero__name-trigger"
               onPointerEnter={() => setMeaningOpen(true)}
@@ -237,22 +238,30 @@ export function Hero() {
                 trigger="mount"
                 fillMode="wipe"
                 wipeFrom="left"
-                fontSize={160}
+                fontSize={135}
                 fontWeight={600}
                 fontFamily='"Inter Tight", "Helvetica Neue", Arial, sans-serif'
                 letterSpacing={-8}
               />
-              <span ref={taglineRef} className="hero__tagline">Hydration in its prime.</span>
+              <span className="hero__tagline">Hydration in its prime.</span>
             </button>
           </h1>
 
           <span
-            className={`hero__meaning-line${meaningOpen ? " is-open" : ""}`}
+            className={`hero__meaning-line hero__meaning-line--h${meaningOpen ? " is-open" : ""}`}
             style={{
               left: `${connector.x}px`,
               top: `${connector.y}px`,
-              width: `${connector.length}px`,
-              transform: `rotate(${connector.angle}deg)`,
+              width: `${connector.horizontal}px`,
+            }}
+            aria-hidden="true"
+          />
+          <span
+            className={`hero__meaning-line hero__meaning-line--v${meaningOpen ? " is-open" : ""}`}
+            style={{
+              left: `${connector.cornerX}px`,
+              top: `${connector.y}px`,
+              height: `${connector.vertical}px`,
             }}
             aria-hidden="true"
           />
