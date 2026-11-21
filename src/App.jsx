@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { StoreProvider } from "./context/StoreContext.jsx";
 import { Sprite } from "./components/Icon.jsx";
 import { Ticker, Nav, MobileMenu } from "./components/Header.jsx";
-import { Hero, Marquee } from "./components/Hero.jsx";
+import { Hero } from "./components/Hero.jsx";
 import { Problem, HowItWorks, Anatomy, Features } from "./components/Sections.jsx";
 import { Colorways } from "./components/Colorways.jsx";
 import { Timeline, Safety, Faq, FinalCta, Footer } from "./components/Story.jsx";
@@ -83,7 +83,6 @@ function Site() {
 
       <main id="main">
         <Hero />
-        <Marquee />
         <Problem />
         <HowItWorks />
         <Anatomy />
