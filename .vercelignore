@@ -4,6 +4,6 @@ init (*).py
 submit.py
 hwa-start.*
 opencode.json
-context/
+/context/
 product_images/
 scripts/
