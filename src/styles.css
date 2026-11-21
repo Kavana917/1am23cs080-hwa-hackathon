@@ -52,7 +52,7 @@ html {
       var(--frost) 60%,
       var(--frost-2) 100%
     )
-    no-repeat top center / 100% calc(100svh + 160px), var(--frost);
+    no-repeat top center / 100% max(100svh + 48px, 820px), var(--frost);
 }
 
 body {
@@ -537,7 +537,9 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   display: flex;
   min-height: max(700px, calc(100svh - 110px));
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
+  clip-path: inset(-220px 0 0 0);
   background: transparent;
 }
 .hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
