@@ -1,22 +1,30 @@
 const QUADRANTS = [
   {
     id: 1,
-    label: "Why Rime — detail one",
+    title: "Silicone lick mats",
+    lasts: "Lasts: 5 to 15 minutes, depending on the food.",
+    rime: "Rime: The frozen rod keeps the sleeve cold for a 3–4 hour session, so your dog has something to lick with or without food.",
     image: "/assets/why-quadrant-1.webp",
   },
   {
     id: 2,
-    label: "Why Rime — detail two",
+    title: "Loose ice cubes",
+    lasts: "Lasts: 2 to 5 minutes",
+    rime: "Rime: The surface is soft silicone with no hard ice to crunch, and it stays cold for hours instead of mins.",
     image: "/assets/why-quadrant-2.webp",
   },
   {
     id: 3,
-    label: "Why Rime — detail three",
+    title: "Stuffed rubber chew toys",
+    lasts: "Lasts: 5 to 10 mins",
+    rime: "Rime: There's no messy cleaning. The sleeve rinses in about a minute.",
     image: "/assets/why-quadrant-3.webp",
   },
   {
     id: 4,
-    label: "Why Rime — detail four",
+    title: "DIY frozen molds",
+    lasts: "Lasts: 10 to 30 minutes.",
+    rime: "Rime: The sealed rod never needs filling or cleaning. Just after use put it back in the freezer.",
     image: "/assets/why-quadrant-4.webp",
   },
 ];
@@ -29,7 +37,6 @@ export function WhyBest() {
           <button
             className={`why__cell why__cell--${quadrant.id}`}
             type="button"
-            aria-label={quadrant.label}
             key={quadrant.id}
           >
             <span
@@ -37,6 +44,11 @@ export function WhyBest() {
               style={{ backgroundImage: `url(${quadrant.image})` }}
               aria-hidden="true"
             />
+            <span className="why__content">
+              <span className="why__title">{quadrant.title}</span>
+              <span className="why__lasts">{quadrant.lasts}</span>
+              <span className="why__rime">{quadrant.rime}</span>
+            </span>
           </button>
         ))}
       </div>
