@@ -127,9 +127,7 @@ export function Faq() {
             Questions
           </p>
           <h2 className="h2" data-reveal style={{ "--d": "60ms" }}>
-            Good
-            <br />
-            <em>questions.</em>
+            FAQs
           </h2>
           <p data-reveal style={{ "--d": "120ms" }}>
             Straight answers about cold, cleaning, chewing and the honest limits of a session.
