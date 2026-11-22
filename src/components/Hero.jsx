@@ -241,7 +241,7 @@ export function Hero() {
                 fontSize={135}
                 fontWeight={600}
                 fontFamily='"Inter Tight", "Helvetica Neue", Arial, sans-serif'
-                letterSpacing={-8}
+                letterSpacing={-2}
               />
               <span className="hero__tagline">Hydration in its prime.</span>
             </button>

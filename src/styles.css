@@ -848,6 +848,70 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
+   WHY RIME
+   ========================================================= */
+.why {
+  position: relative;
+  min-height: max(680px, 92svh);
+  overflow: hidden;
+  background: url("/assets/why-named.webp") center center / cover no-repeat;
+}
+.why__grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.why__cell {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  perspective: 1200px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.why__cell:focus-visible {
+  outline: 2px solid var(--ice-deep);
+  outline-offset: -5px;
+}
+.why__flip {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  transform: rotateY(-92deg);
+  transform-origin: center center;
+  transition: transform 0.7s var(--ease-out);
+}
+.why__cell:hover .why__flip,
+.why__cell:focus-visible .why__flip,
+.why__cell:active .why__flip {
+  transform: rotateY(0deg);
+}
+.why__line {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+.why__line--vertical {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  border-left: 1px dotted rgba(66, 34, 41, 0.62);
+}
+.why__line--horizontal {
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px dotted rgba(66, 34, 41, 0.62);
+}
+
+/* =========================================================
    MARQUEE
    ========================================================= */
 .marquee {
