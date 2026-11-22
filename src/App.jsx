@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StoreProvider } from "./context/StoreContext.jsx";
 import { Sprite } from "./components/Icon.jsx";
 import { Ticker, Nav, MobileMenu } from "./components/Header.jsx";
@@ -11,8 +11,15 @@ import { Shop } from "./components/Shop.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { SafetyDialog, Toast } from "./components/Overlays.jsx";
 import { SectionDivider } from "./components/SectionDivider.jsx";
+import Loader from "./components/Loader.jsx";
 
 function Site() {
+  const [revealed, setRevealed] = useState(false);
+  const [loaderDone, setLoaderDone] = useState(false);
+
+  const handleReveal = useCallback(() => setRevealed(true), []);
+  const handleLoaderDone = useCallback(() => setLoaderDone(true), []);
+
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
 
@@ -71,6 +78,7 @@ function Site() {
   return (
     <>
       <Sprite />
+      {!loaderDone && <Loader onReveal={handleReveal} onDone={handleLoaderDone} />}
       <div className="scroll-progress" aria-hidden="true">
         <span id="scrollProgress" />
       </div>
@@ -83,7 +91,7 @@ function Site() {
       <Nav />
       <MobileMenu />
 
-      <main id="main">
+      <main id="main" className={revealed ? "is-revealed" : ""}>
         <Hero />
         <SectionDivider />
         <HowItWorks />
