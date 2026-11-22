@@ -39,23 +39,15 @@ export async function sendOrderConfirmation(order) {
   const shippingLabel = order.shippingLabel || order.shippingMethod || "Standard";
   const shippingCharge = order.shipping === 0 ? "Free" : money(order.shipping);
   const safeName = customer.name || "there";
-
   const itemAmount = (item) => item.lineTotal ?? (item.unitPrice || 0) * item.qty;
+  const rawMoney = (value) => Number(value || 0).toLocaleString("en-IN");
 
-  const describeItem = (item) => {
-    const color = colorLabel(item.color);
-    const suffix = color ? ` (${color})` : "";
-    return `${item.name}${suffix} × ${item.qty} — ${money(itemAmount(item))}`;
-  };
-
-  const itemLines = items.map(describeItem);
-  const itemsPlain = itemLines.join("\n");
-  const itemsInline = itemLines.join("; ");
-
-  const itemRows = items
+  const orderRows = items
     .map((item) => {
       const color = colorLabel(item.color);
-      const detail = [item.meta, color && `Colour: ${color}`].filter(Boolean).join(" · ");
+      const detail = [item.meta, color && `Colour: ${color}`]
+        .filter(Boolean)
+        .join(" · ");
       return `
         <tr>
           <td style="padding:12px 8px 12px 0;vertical-align:top;">
@@ -72,77 +64,84 @@ export async function sendOrderConfirmation(order) {
     })
     .join("");
 
-  const orderDetailsHtml = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin-top:18px;">
-      ${itemRows}
-      <tr>
-        <td colspan="2" style="padding:10px 0 0;border-top:1px solid #e6d0c3;font-family:Arial,sans-serif;font-size:13px;color:#6d4c52;">Subtotal</td>
-        <td style="padding:10px 0 0;border-top:1px solid #e6d0c3;text-align:right;font-family:Arial,sans-serif;font-size:13px;color:#2a1418;">${money(order.subtotal)}</td>
-      </tr>
-      <tr>
-        <td colspan="2" style="padding:6px 0;font-family:Arial,sans-serif;font-size:13px;color:#6d4c52;">Shipping · ${escapeHtml(shippingLabel)}</td>
-        <td style="padding:6px 0;text-align:right;font-family:Arial,sans-serif;font-size:13px;color:#2a1418;">${shippingCharge}</td>
-      </tr>
-      <tr>
-        <td colspan="2" style="padding:12px 0 0;border-top:2px solid #37161b;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;color:#2a1418;">Total</td>
-        <td style="padding:12px 0 0;border-top:2px solid #37161b;text-align:right;font-family:Arial,sans-serif;font-size:18px;font-weight:bold;color:#37161b;">${money(order.total)}</td>
-      </tr>
-    </table>`;
-
-  const messageHtml = `
-    <div style="background:#f8f1e5;padding:28px;font-family:Arial,sans-serif;color:#2a1418;">
-      <img src="${assetUrl("/assets/rime-email-logo.png")}" alt="Rime" width="140" style="width:140px;height:auto;display:block;margin-bottom:22px;" />
-      <h1 style="margin:0 0 8px;font-size:26px;color:#37161b;">Order confirmed</h1>
-      <p style="margin:0 0 18px;font-size:14px;line-height:1.6;">Hi ${escapeHtml(safeName)}, thanks for ordering from Rime. You'll pay cash when your order arrives.</p>
-      <p style="margin:0;font-size:13px;line-height:1.6;color:#6d4c52;">
-        <strong style="color:#37161b;">Order:</strong> ${escapeHtml(order.id)}<br />
-        <strong style="color:#37161b;">Placed:</strong> ${escapeHtml(date)}<br />
-        <strong style="color:#37161b;">Payment:</strong> Cash on delivery
-      </p>
-      ${orderDetailsHtml}
-      <p style="margin:22px 0 0;font-size:13px;line-height:1.6;color:#6d4c52;">
-        <strong style="color:#37161b;">Deliver to:</strong> ${escapeHtml(customer.name)}<br />
-        ${escapeHtml(address)}<br />
-        Phone: ${escapeHtml(customer.phone)}
-      </p>
-      ${order.note ? `<p style="margin:18px 0 0;font-size:11px;line-height:1.5;color:#8a6b70;">${escapeHtml(order.note)}</p>` : ""}
+  const orderEmailHtml = `
+    <div style="font-family:Arial,sans-serif;background:#f5f5f5;padding:20px 8px;">
+      <div style="max-width:600px;margin:auto;background:#fff;">
+        <div style="border-top:6px solid #37161b;padding:16px;">
+          <a href="${SITE_URL}" style="text-decoration:none;outline:none;vertical-align:middle;">
+            <img src="${assetUrl("/assets/rime-email-logo.png")}" alt="Rime" width="120" style="width:120px;height:auto;vertical-align:middle;" />
+          </a>
+          <span style="font-size:16px;vertical-align:middle;border-left:1px solid #333;padding-left:8px;color:#37161b;">
+            <strong>Thank You for Your Order</strong>
+          </span>
+        </div>
+        <div style="padding:0 16px 16px;">
+          <p style="font-size:14px;color:#333;">Hi ${escapeHtml(safeName)}, we'll send you tracking information when the order ships. You'll pay cash when it arrives.</p>
+          <div style="font-size:14px;padding-bottom:6px;border-bottom:2px solid #37161b;color:#37161b;">
+            <strong>Order # ${escapeHtml(order.id)}</strong>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            ${orderRows}
+          </table>
+          <div style="padding:16px 0 0;"><div style="border-top:2px solid #37161b;"></div></div>
+          <table style="border-collapse:collapse;width:100%;text-align:right;">
+            <tr>
+              <td style="width:60%;"></td>
+              <td style="font-size:14px;color:#333;">Subtotal</td>
+              <td style="padding:6px 8px;white-space:nowrap;font-size:14px;color:#37161b;">${money(order.subtotal)}</td>
+            </tr>
+            <tr>
+              <td style="width:60%;"></td>
+              <td style="font-size:14px;color:#333;">Shipping · ${escapeHtml(shippingLabel)}</td>
+              <td style="padding:6px 8px;white-space:nowrap;font-size:14px;color:#37161b;">${shippingCharge}</td>
+            </tr>
+            <tr>
+              <td style="width:60%;"></td>
+              <td style="font-size:14px;color:#333;">Taxes</td>
+              <td style="padding:6px 8px;white-space:nowrap;font-size:14px;color:#37161b;">Included</td>
+            </tr>
+            <tr>
+              <td style="width:60%;"></td>
+              <td style="border-top:2px solid #37161b;font-size:14px;color:#37161b;"><strong>Order Total</strong></td>
+              <td style="padding:12px 8px;border-top:2px solid #37161b;white-space:nowrap;font-size:16px;color:#37161b;"><strong>${money(order.total)}</strong></td>
+            </tr>
+          </table>
+          <p style="margin:20px 0 0;font-size:13px;line-height:1.6;color:#6d4c52;">
+            <strong style="color:#37161b;">Deliver to:</strong> ${escapeHtml(customer.name)}<br />
+            ${escapeHtml(address)}<br />
+            Phone: ${escapeHtml(customer.phone)}
+          </p>
+          ${order.note ? `<p style="margin:16px 0 0;font-size:11px;line-height:1.5;color:#8a6b70;">${escapeHtml(order.note)}</p>` : ""}
+        </div>
+      </div>
+      <div style="max-width:600px;margin:auto;">
+        <p style="color:#999;font-size:12px;">The email was sent to ${escapeHtml(customer.email)}<br />You received this email because you placed the order</p>
+      </div>
     </div>`;
 
+  const itemLines = items.map((item) => {
+    const color = colorLabel(item.color);
+    return `${item.name}${color ? ` (${color})` : ""} × ${item.qty} — ${money(itemAmount(item))}`;
+  });
   const summary = [
     `Order ${order.id}`,
     `Placed ${date}`,
-    `Items: ${itemsInline}`,
+    `Items: ${itemLines.join("; ")}`,
     `Deliver to: ${[customer.name, address].filter(Boolean).join(", ")}`,
     customer.phone ? `Phone: ${customer.phone}` : "",
     "Payment: Cash on delivery",
     `Shipping: ${shippingLabel} (${shippingCharge})`,
     `Subtotal: ${money(order.subtotal)}`,
+    `Taxes: Included`,
     `Total: ${money(order.total)}`,
   ]
     .filter(Boolean)
     .join(" | ");
 
-  const messageText = `Hi ${safeName}, your Rime order ${order.id} is confirmed. ${summary} You'll pay cash when it arrives.`;
-  const message = messageHtml;
-
-  const rawMoney = (value) => Number(value || 0).toLocaleString("en-IN");
-  const orders = items.map((item) => ({
-    image_url: productImage(item.sku),
-    name: item.name,
-    units: item.qty,
-    price: rawMoney(itemAmount(item)),
-  }));
-  const cost = {
-    shipping: order.shipping === 0 ? "Free" : rawMoney(order.shipping),
-    tax: "Included",
-    total: rawMoney(order.total),
-  };
-
   const templateParams = {
     to_email: customer.email,
     email: customer.email,
     to_name: customer.name,
-    name: customer.name,
     from_name: "Rime",
     reply_to: customer.email,
     subject: `Rime order ${order.id} confirmed`,
@@ -153,46 +152,27 @@ export async function sendOrderConfirmation(order) {
     date,
     customer_name: customer.name,
     customer_email: customer.email,
-    phone: customer.phone,
     customer_phone: customer.phone,
-    address,
     delivery_address: address,
     payment_method: "Cash on delivery",
-    payment: "Cash on delivery",
     shipping_method: shippingLabel,
     subtotal: money(order.subtotal),
     shipping: shippingCharge,
+    tax: "Included",
     total: money(order.total),
-    total_price: money(order.total),
     total_amount: money(order.total),
-    amount: money(order.total),
-    price: rawMoney(order.total),
-    orders,
-    cost,
-    website_link: SITE_URL,
-    shipping_label: shippingLabel,
-    items: itemsPlain,
-    item_list: itemsPlain,
-    order_items: itemsPlain,
-    line_items: itemsPlain,
-    products: itemsPlain,
-    cart: itemsPlain,
+    "cost.shipping": shippingCharge,
+    "cost.tax": "Included",
+    "cost.total": Number(order.total || 0).toLocaleString("en-IN"),
+    item_count: items.length,
+    items: itemLines.join("\n"),
     order_details: summary,
     order_summary: summary,
-    summary,
-    message,
-    message_text: messageText,
-    plain_message: messageText,
-    content: messageHtml,
-    body: messageHtml,
-    html: messageHtml,
-    message_html: messageHtml,
-    email_body: messageHtml,
-    order_details_html: orderDetailsHtml,
-    order_items_html: itemRows,
+    message_text: `Hi ${safeName}, your Rime order ${order.id} is confirmed. ${summary}`,
+    order_email: orderEmailHtml,
+    message: orderEmailHtml,
     logo_url: assetUrl("/assets/rime-email-logo.png"),
-    item_image: productImage(items[0]?.sku),
-    item_images: items.map((item) => productImage(item.sku)).join(","),
+    website_link: SITE_URL,
   };
 
   try {
