@@ -100,7 +100,7 @@ function Site() {
         className={`${revealed ? "is-revealed" : ""}${settled ? " is-settled" : ""}`}
       >
         <Hero />
-        <SectionDivider />
+        <SectionDivider className="section-divider--hero" />
         <HowItWorks />
         <SectionDivider />
         <WhyBest />
