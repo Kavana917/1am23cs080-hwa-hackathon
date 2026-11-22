@@ -3,7 +3,7 @@ import { useStore } from "../context/StoreContext.jsx";
 
 const OFFERS = [
   "Launch price — Standard ₹3,999",
-  "Save 33% on the launch edit",
+  "Save 33% on the launch",
   "Free shipping over ₹4,500",
   "Ships in 1–2 business days",
 ];

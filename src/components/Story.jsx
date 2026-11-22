@@ -181,10 +181,6 @@ export function FinalCta() {
       <div className="final__glow" aria-hidden="true" />
       <div className="container final__inner">
         <div className="final__copy">
-          <p className="eyebrow eyebrow--light">
-            <span className="eyebrow__line" />
-            Launch edit
-          </p>
           <h2 className="h2 h2--light">
             Give them
             <br />
@@ -225,7 +221,7 @@ export function Footer() {
       <div className="container">
         <div className="footer__top">
           <a className="brand brand--footer" href="#top" aria-label="Rime home">
-            <span className="brand__letter" aria-hidden="true">R</span>
+            <span className="brand__word" aria-hidden="true">RIME</span>
           </a>
           <span className="footer__tag">Hydration in its prime.</span>
         </div>

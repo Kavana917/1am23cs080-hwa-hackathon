@@ -68,8 +68,8 @@ const STEPS = [
   },
   {
     title: "Let your dog lick",
-    body: "Put Rime on the floor and let your dog lick. Every lick releases a small sip of chilled water, and the drip collar catches melting drops. It's designed to keep your dog busy for a 3–4 hour session. Supervise the first few sessions. Rime is a lick toy, not a chew toy.",
-    image: asset("/assets/how-7-lick.webp"),
+    body: "Put Rime on the floor and let your dog lick. Every lick releases a small sip of chilled water, and the drip collar catches melting drops. It's designed to keep your dog busy for a 3–4 hour session. Supervise the first few sessions.",
+    image: asset("/assets/doglicking.png"),
     alt: "A dog licking the frosted Rime sleeve",
   },
 ];
@@ -159,7 +159,7 @@ export function HowItWorks() {
         <div className="how__left">
           <span className="how__eyebrow mono">The routine</span>
           <h2 className="how__title">
-            How
+            How{" "}
             <br />
             <em>it works</em>
           </h2>
