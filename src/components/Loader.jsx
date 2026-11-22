@@ -8,7 +8,7 @@ export function Loader({ onReveal, onDone }) {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const duration = reduced ? 180 : 1000;
+    const duration = reduced ? 180 : 2350;
     const exitDuration = reduced ? 80 : 650;
     let start = 0;
 
