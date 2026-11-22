@@ -3,11 +3,10 @@ import { StoreProvider } from "./context/StoreContext.jsx";
 import { Sprite } from "./components/Icon.jsx";
 import { Ticker, Nav, MobileMenu } from "./components/Header.jsx";
 import { Hero } from "./components/Hero.jsx";
-import { Anatomy, Features } from "./components/Sections.jsx";
+import { Anatomy } from "./components/Sections.jsx";
 import { HowItWorks } from "./components/HowItWorks.jsx";
 import { WhyBest } from "./components/WhyBest.jsx";
-import { Colorways } from "./components/Colorways.jsx";
-import { Timeline, Safety, Faq, FinalCta, Footer } from "./components/Story.jsx";
+import { Safety, Faq, FinalCta, Footer } from "./components/Story.jsx";
 import { Shop } from "./components/Shop.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { SafetyDialog, Toast } from "./components/Overlays.jsx";
@@ -88,9 +87,6 @@ function Site() {
         <HowItWorks />
         <WhyBest />
         <Anatomy />
-        <Features />
-        <Colorways />
-        <Timeline />
         <Safety />
         <Shop />
         <Faq />

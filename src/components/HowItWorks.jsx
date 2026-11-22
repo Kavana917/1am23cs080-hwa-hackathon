@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+const ASSET_VERSION = "20261122a";
+const asset = (path) => `${path}?v=${ASSET_VERSION}`;
+
 const MAROON = "#37161b";
 const SHADES = [
   "#f8f1e5",
@@ -15,19 +18,19 @@ const STEPS = [
   {
     title: "Freeze the rod",
     body: "Put the sealed Chill Rod in the freezer overnight, or for at least 4 hours. It's the cold source for the whole session, and there's no tray to fill or empty.",
-    image: "/assets/how-1-freeze.webp",
+    image: asset("/assets/how-1-freeze.webp"),
     alt: "The sealed Chill Rod ready for the freezer",
   },
   {
     title: "Fill the base with cold water",
     body: "Pour cold water into the vacuum-insulated base, up to the fill line. This is the water your dog gets in small sips as they lick.",
-    image: "/assets/how-2-fill.webp",
+    image: asset("/assets/how-2-fill.webp"),
     alt: "Cold water being poured into the insulated Rime base",
   },
   {
     title: "Screw the rod into the base",
     body: "Take the frozen rod from the freezer and screw it into the center of the base. It sits in the water and chills it, and it keeps the sleeve cold from the inside.",
-    image: "/assets/how-3-rod.webp",
+    image: asset("/assets/how-3-rod.webp"),
     alt: "The frozen Chill Rod being screwed into the base",
   },
   {
@@ -37,36 +40,36 @@ const STEPS = [
       {
         label: "Bare",
         body: "Nothing on it. The cold sleeve, condensation and water sips give a zero-calorie frost lick for everyday use.",
-        image: "/assets/how-4-bare.webp",
+        image: asset("/assets/how-4-bare.webp"),
       },
       {
         label: "Spread-On",
         body: "Press a thick treat, such as xylitol-free peanut butter, mashed banana or pumpkin, into the pockets right before serving.",
-        image: "/assets/how-4-spread.webp",
+        image: asset("/assets/how-4-spread.webp"),
       },
       {
         label: "Freeze-On",
         body: "Spread the treat onto the sleeve the night before and freeze the sleeve with the rod. It starts frozen and lasts longer.",
-        image: "/assets/how-4-freeze.webp",
+        image: asset("/assets/how-4-freeze.webp"),
       },
     ],
   },
   {
     title: "Twist the sleeve onto the base",
     body: "Slide the sleeve over the rod and twist it onto the base until it's snug. A sealing gasket keeps the water in.",
-    image: "/assets/how-5-sleeve.webp",
+    image: asset("/assets/how-5-sleeve.webp"),
     alt: "The silicone sleeve being twisted onto the base",
   },
   {
     title: "Put the top cap on",
     body: "Twist the cap onto the top to close it up.",
-    image: "/assets/how-6-cap.webp",
+    image: asset("/assets/how-6-cap.webp"),
     alt: "The top cap being twisted onto the column",
   },
   {
     title: "Let your dog lick",
     body: "Put Rime on the floor and let your dog lick. Every lick releases a small sip of chilled water, and the drip collar catches melting drops. It's designed to keep your dog busy for a 3–4 hour session. Supervise the first few sessions. Rime is a lick toy, not a chew toy.",
-    image: "/assets/how-7-lick.webp",
+    image: asset("/assets/how-7-lick.webp"),
     alt: "A dog licking the frosted Rime sleeve",
   },
 ];

@@ -1,121 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useStore } from "../context/StoreContext.jsx";
 import { Icon } from "./Icon.jsx";
-
-/* ------------------------------------------------------------------ */
-/* Timeline                                                            */
-/* ------------------------------------------------------------------ */
-
-const NODES = [
-  {
-    time: "Night before",
-    title: "Freeze.",
-    body: "Chill Rod into the freezer at 0°F / −18°C or colder. Overnight is best; four hours is the minimum.",
-  },
-  {
-    time: "Before you leave",
-    title: "Load.",
-    body: "Cold water in the base, sleeve on, treats spread into the honeycomb — or leave it bare.",
-  },
-  {
-    time: "Hour 0–4",
-    title: "Lick.",
-    body: "Your dog works the cold sleeve and takes small sips as they go. One good 3–4 hour session.",
-  },
-  {
-    time: "After",
-    title: "Reset.",
-    body: "Rinse the sleeve, wipe the rod, refreeze. Roughly 60 seconds of your time.",
-  },
-];
-
-export function Timeline() {
-  const trackRef = useRef(null);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const node = trackRef.current;
-      if (!node) return;
-      const rect = node.getBoundingClientRect();
-      const start = window.innerHeight * 0.82;
-      const distance = rect.height + start - window.innerHeight * 0.34;
-      const value = distance <= 0 ? 1 : (start - rect.top) / distance;
-      setProgress(Math.max(0, Math.min(1, value)));
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  return (
-    <section className="section section--bone" id="session">
-      <div className="container">
-        <div className="section-head section-head--split">
-          <div>
-            <p className="eyebrow" data-reveal>
-              <span className="eyebrow__line" />
-              A session, start to finish
-            </p>
-            <h2 className="h2" data-reveal style={{ "--d": "60ms" }}>
-              One good
-              <br />
-              <em>3–4 hour session.</em>
-            </h2>
-          </div>
-          <p className="section-head__lede section-head__lede--right" data-reveal style={{ "--d": "120ms" }}>
-            Rime is a session-length enrichment tool, not an all-day toy. Here is the honest
-            shape of a day with it.
-          </p>
-        </div>
-
-        <div
-          className="timeline__track"
-          ref={trackRef}
-          style={{ "--p": (progress * 100).toFixed(1) }}
-          data-reveal
-        >
-          <div className="timeline__line" aria-hidden="true">
-            <span />
-          </div>
-          {NODES.map((node) => (
-            <article className="t-node" key={node.title}>
-              <span className="t-node__dot" aria-hidden="true" />
-              <span className="t-node__time mono">{node.time}</span>
-              <h3>{node.title}</h3>
-              <p>{node.body}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="honest" data-reveal>
-          <span className="honest__icon" aria-hidden="true">
-            <Icon name="warn" />
-          </span>
-          <div>
-            <h3>Honest expectations</h3>
-            <p>
-              Rime is made for <strong>one good 3–4 hour session at a time</strong>. It is not an
-              all-day toy, and it does not replace walks, play, fresh water or company. Real-world
-              time depends on your room temperature, what you load it with, and how quickly your
-              dog licks.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Safety                                                              */
@@ -389,8 +274,6 @@ export function Footer() {
             <h3 className="mono">Explore</h3>
             <a href="#how">How it works</a>
             <a href="#design">Design</a>
-            <a href="#colorways">Colourways</a>
-            <a href="#session">A session</a>
             <a href="#faq">FAQ</a>
           </div>
 

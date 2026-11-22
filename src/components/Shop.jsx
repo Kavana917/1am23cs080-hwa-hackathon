@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStore } from "../context/StoreContext.jsx";
-import { COLORS, COLOR_ORDER, money, discountPercent } from "../data.js";
+import { money, discountPercent } from "../data.js";
 import { Icon } from "./Icon.jsx";
 import { TintedProduct } from "./TintedProduct.jsx";
 
@@ -24,27 +24,8 @@ function Price({ mrp, price, light = false }) {
   );
 }
 
-function Swatches({ color, onChange, label = true }) {
-  return (
-    <div className="card-swatches" role="group" aria-label="Choose a colourway">
-      {COLOR_ORDER.map((key) => (
-        <button
-          type="button"
-          key={key}
-          className={`mini-swatch ${color === key ? "is-active" : ""}`}
-          style={{ "--sw": COLORS[key].hex }}
-          aria-label={COLORS[key].name}
-          aria-pressed={color === key}
-          onClick={() => onChange(key)}
-        />
-      ))}
-      {label && <span className="card-swatches__label mono">{COLORS[color].name}</span>}
-    </div>
-  );
-}
-
 export function Shop() {
-  const { color, setColor, addItem, openCart, catalog } = useStore();
+  const { color, addItem, openCart, catalog } = useStore();
   const [bundleAdded, setBundleAdded] = useState(false);
 
   const handleAdd = (sku, selected = color) => {
@@ -89,7 +70,7 @@ export function Shop() {
                 <TintedProduct
                   className="tint-product--card"
                   color={color}
-                  alt={`Rime Standard column in ${COLORS[color].name}`}
+                  alt="Rime Standard column"
                 />
               </div>
             </div>
@@ -102,7 +83,6 @@ export function Shop() {
                 The everyday size. 18 oz insulated base, sealed Chill Rod, honeycomb sleeve and
                 travel cap. Designed for a <strong>3–4 hour session</strong>.
               </p>
-              <Swatches color={color} onChange={setColor} />
               <Price mrp={6000} price={3999} />
               <span className="product-card__ship">
                 <Icon name="truck" />
@@ -127,7 +107,7 @@ export function Shop() {
                 <TintedProduct
                   className="tint-product--card"
                   color={color}
-                  alt={`Rime XL column in ${COLORS[color].name}`}
+                  alt="Rime XL column"
                 />
               </div>
             </div>
@@ -140,7 +120,6 @@ export function Shop() {
                 More reservoir, more sleeve, same session length. 28 oz insulated base with an XL
                 Chill Rod and XL honeycomb sleeve.
               </p>
-              <Swatches color={color} onChange={setColor} />
               <Price mrp={7500} price={4999} />
               <span className="product-card__ship">
                 <Icon name="truck" />
