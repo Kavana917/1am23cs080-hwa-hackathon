@@ -1101,36 +1101,30 @@ a { color: inherit; text-decoration: none; }
    ========================================================= */
 .how {
   position: relative;
-  overflow: hidden;
+  height: 620svh;
   background: var(--frost);
-  padding-block: clamp(60px, 7vw, 110px) 0;
 }
-.how__wash {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: var(--oxblood-deep);
-  opacity: 0;
-  transition: opacity 0.9s var(--ease);
-  pointer-events: none;
+.how__pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
 }
-.how.is-merged .how__wash { opacity: 1; }
 .how__inner {
-  position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: var(--container);
+  height: 100%;
+  margin-inline: auto;
+  padding: 96px var(--pad) 44px;
   display: grid;
-  grid-template-columns: 0.82fr 1.12fr 1fr;
-  gap: clamp(24px, 3vw, 56px);
-  align-items: start;
+  grid-template-columns: 0.9fr 1.22fr 1fr;
+  gap: clamp(16px, 2.2vw, 36px);
 }
 .how__rail {
-  position: sticky;
-  top: 96px;
-  height: calc(100svh - 96px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 60px clamp(24px, 3.4vw, 56px);
+  min-height: 0;
+  padding: clamp(28px, 3vw, 52px);
   border-radius: var(--radius);
   background: var(--oxblood-deep);
   color: var(--bone);
@@ -1139,7 +1133,7 @@ a { color: inherit; text-decoration: none; }
 .how__title {
   margin-top: 22px;
   font-family: var(--display);
-  font-size: clamp(54px, 5.4vw, 92px);
+  font-size: clamp(52px, 5vw, 86px);
   font-weight: 500;
   line-height: 0.92;
   letter-spacing: -0.055em;
@@ -1175,76 +1169,52 @@ a { color: inherit; text-decoration: none; }
 }
 .how__dot.is-done { background: rgba(127, 208, 220, 0.5); }
 .how__dot.is-active { width: 38px; background: var(--ice-bright); }
-.how__stage {
-  position: sticky;
-  top: 96px;
-  height: calc(100svh - 96px);
+.how__gallery {
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: clamp(6px, 0.8vw, 12px);
+  min-height: 0;
 }
-.how__frame {
-  position: relative;
-  width: 100%;
-  max-height: 76svh;
-  aspect-ratio: 4 / 4.3;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--oxblood);
-  box-shadow: var(--shadow);
-}
-.how__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius);
-  pointer-events: none;
-}
-.how__img {
-  position: absolute;
-  inset: 0;
+.how__thumb {
   width: 100%;
   height: 100%;
+  min-height: 0;
   object-fit: cover;
-  opacity: 0;
-  transform: scale(1.03);
-  transition: opacity 0.55s var(--ease), transform 1s var(--ease);
+  border-radius: 4px;
+  background: var(--oxblood);
 }
-.how__img.is-active { opacity: 1; transform: none; }
-.how__badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 2;
-  max-width: calc(100% - 32px);
-  padding: 7px 11px;
-  border-radius: 999px;
-  background: rgba(42, 20, 24, 0.58);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  color: var(--frost);
-  font-size: 8px;
+.how__panel {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--frost-2);
+  transition: background 0.75s var(--ease), color 0.75s var(--ease);
 }
-.how__cards { padding-bottom: clamp(40px, 6vw, 90px); }
 .how-card {
-  min-height: 78svh;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(36px, 5vw, 64px) clamp(20px, 2.6vw, 40px);
-  border-left: 1px solid var(--line);
+  padding: clamp(26px, 3vw, 52px);
   opacity: 0;
-  transform: translateX(-64px);
-  transition: opacity 0.7s var(--ease), transform 0.8s var(--ease-out),
-    color 0.6s var(--ease), border-color 0.6s var(--ease);
+  transform: translateX(105%);
+  transition: none;
+  pointer-events: none;
 }
-.how-card.is-in { opacity: 0.42; transform: none; }
-.how-card.is-in.is-active { opacity: 1; }
+.how-card.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: transform 0.65s var(--ease-out), opacity 0.4s var(--ease);
+}
 .how-card__num { color: var(--ice-deep); font-size: 9px; }
 .how-card h3 {
   margin-top: 14px;
   font-family: var(--display);
-  font-size: clamp(28px, 2.8vw, 42px);
+  font-size: clamp(26px, 2.6vw, 40px);
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -1252,41 +1222,31 @@ a { color: inherit; text-decoration: none; }
 .how-card p {
   margin-top: 16px;
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.75;
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.7;
 }
-.how-card__modes { display: grid; gap: 10px; margin-top: 20px; }
+.how-card__modes { display: grid; gap: 8px; margin-top: 18px; }
 .how-mode {
   display: grid;
-  grid-template-columns: 62px 1fr;
-  column-gap: 12px;
+  grid-template-columns: 46px 1fr;
+  column-gap: 10px;
   row-gap: 2px;
   align-items: center;
-  text-align: left;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.35);
-  transition: border-color 0.3s var(--ease), background 0.3s var(--ease),
-    transform 0.3s var(--ease);
-}
-.how-mode:hover { transform: translateX(3px); }
-.how-mode.is-active {
-  border-color: var(--ice-deep);
-  background: rgba(169, 214, 221, 0.18);
 }
 .how-mode img {
   grid-row: 1 / span 2;
-  width: 62px;
-  height: 56px;
+  width: 46px;
+  height: 40px;
   object-fit: cover;
   border-radius: 4px;
 }
 .how-mode__label { color: var(--ice-deep); font-size: 9px; }
-.how-mode__body { color: var(--muted); font-size: 11px; line-height: 1.5; }
-.how.is-merged .how__stage,
-.how.is-merged .how-card { color: var(--bone); }
-.how.is-merged .how-card { border-left-color: var(--line-light); }
+.how-mode__body { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.how.is-merged .how__panel { background: var(--oxblood-deep); color: var(--bone); }
 .how.is-merged .how-card p,
 .how.is-merged .how-mode__body { color: rgba(248, 241, 229, 0.72); }
 .how.is-merged .how-card__num,
@@ -1295,11 +1255,6 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--line-light);
   background: rgba(248, 241, 229, 0.07);
 }
-.how.is-merged .how-mode.is-active {
-  border-color: var(--ice-bright);
-  background: rgba(127, 208, 220, 0.12);
-}
-
 /* =========================================================
    ANATOMY
    ========================================================= */
@@ -2685,27 +2640,38 @@ a { color: inherit; text-decoration: none; }
   .hero__ice { width: min(var(--w), 260px); }
   .section-head--split { grid-template-columns: 1fr; gap: 20px; }
   .section-head__lede--right { margin-left: 0; }
-  .how__inner { grid-template-columns: 1fr; gap: 0; }
-  .how__rail {
-    position: static;
+  .how { height: auto; }
+  .how__pin { position: static; height: auto; overflow: visible; }
+  .how__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
     height: auto;
-    min-height: 46svh;
-    padding: clamp(36px, 7vw, 64px);
+    padding-block: 64px 48px;
+  }
+  .how__rail {
+    min-height: 44svh;
+    padding: clamp(32px, 7vw, 56px);
   }
   .how__title { font-size: clamp(54px, 13vw, 84px); }
   .how__progress { margin-top: 36px; }
-  .how__stage {
-    position: sticky;
-    top: 68px;
-    z-index: 2;
-    height: 46svh;
-    padding-block: 18px;
-    background: var(--frost);
+  .how__gallery { grid-auto-rows: 20svh; }
+  .how__panel { overflow: visible; background: transparent; }
+  .how-card {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
   }
-  .how__frame { height: 100%; max-height: none; aspect-ratio: auto; }
-  .how.is-merged .how__stage { background: var(--oxblood-deep); }
-  .how-card { min-height: 64svh; padding-inline: 0; }
-  .how-card.is-in { opacity: 1; }
+  .how-card.is-active { transition: none; }
+  .how.is-merged .how__panel { background: transparent; }
+  .how.is-merged .how-card p,
+  .how.is-merged .how-mode__body { color: var(--muted); }
+  .how.is-merged .how-card__num,
+  .how.is-merged .how-mode__label { color: var(--ice-deep); }
   .anatomy__body { grid-template-columns: 1fr; }
   .anatomy__visual { position: relative; }
   .anatomy__list { margin-top: 10px; }
