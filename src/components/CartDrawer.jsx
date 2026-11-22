@@ -649,7 +649,8 @@ function SuccessView({ order, closeCart, catalog, emailStatus }) {
       </p>
       {emailStatus === "sent" && (
         <p className="email-status email-status--ok">
-          A confirmation email has been sent to {order.customer?.email}.
+          A confirmation email has been sent to {order.customer?.email}. If you don&rsquo;t see it
+          in your inbox, check your spam folder once.
         </p>
       )}
       {emailStatus === "failed" && (
