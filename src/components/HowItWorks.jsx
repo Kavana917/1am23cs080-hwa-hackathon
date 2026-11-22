@@ -115,9 +115,6 @@ function StepCopy({ step, index }) {
 export function HowItWorks() {
   const section = useRef(null);
   const [active, setActive] = useState(0);
-  const [compact, setCompact] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(max-width: 1020px)").matches
-  );
 
   useEffect(() => {
     const node = section.current;
@@ -151,13 +148,6 @@ export function HowItWorks() {
     };
   }, []);
 
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 1020px)");
-    const onChange = (event) => setCompact(event.matches);
-    query.addEventListener?.("change", onChange);
-    return () => query.removeEventListener?.("change", onChange);
-  }, []);
-
   const theme = (index) => ({
     backgroundColor: SHADES[index],
     color: index >= 5 ? "#f8f1e5" : "#2a1418",
@@ -165,7 +155,7 @@ export function HowItWorks() {
 
   return (
     <section ref={section} className="how" id="how" aria-label="How to use Rime">
-      <div className={`how__pin ${compact ? "is-compact" : ""}`}>
+      <div className="how__pin">
         <div className="how__left">
           <span className="how__eyebrow mono">The routine</span>
           <h2 className="how__title">
@@ -195,23 +185,10 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {compact ? (
-          <div className="how__compact">
-            {STEPS.map((step, index) => (
-              <div className="how__step" style={theme(index)} key={step.title}>
-                <StepMedia step={step} />
-                <StepCopy step={step} index={index} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            <div className="how__reveal" style={theme(active)} key={active}>
-              <StepCopy step={STEPS[active]} index={active} />
-            </div>
-            <StepMedia step={STEPS[active]} key={`media-${active}`} />
-          </>
-        )}
+        <div className="how__reveal" style={theme(active)} key={active}>
+          <StepCopy step={STEPS[active]} index={active} />
+        </div>
+        <StepMedia step={STEPS[active]} key={`media-${active}`} />
       </div>
     </section>
   );

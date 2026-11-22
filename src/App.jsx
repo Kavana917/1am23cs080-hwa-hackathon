@@ -16,9 +16,13 @@ import Loader from "./components/Loader.jsx";
 function Site() {
   const [revealed, setRevealed] = useState(false);
   const [loaderDone, setLoaderDone] = useState(false);
+  const [settled, setSettled] = useState(false);
 
   const handleReveal = useCallback(() => setRevealed(true), []);
-  const handleLoaderDone = useCallback(() => setLoaderDone(true), []);
+  const handleLoaderDone = useCallback(() => {
+    setLoaderDone(true);
+    setSettled(true);
+  }, []);
 
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -91,7 +95,10 @@ function Site() {
       <Nav />
       <MobileMenu />
 
-      <main id="main" className={revealed ? "is-revealed" : ""}>
+      <main
+        id="main"
+        className={`${revealed ? "is-revealed" : ""}${settled ? " is-settled" : ""}`}
+      >
         <Hero />
         <SectionDivider />
         <HowItWorks />

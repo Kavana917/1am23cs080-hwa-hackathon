@@ -157,6 +157,7 @@ html.is-booting, html.is-booting body { overflow: hidden; }
   clip-path: inset(0 0 0 0);
   transition: clip-path 650ms cubic-bezier(0.76, 0, 0.24, 1);
 }
+#main.is-settled { clip-path: none; transition: none; }
 .loader {
   position: fixed;
   inset: 0;
@@ -504,6 +505,18 @@ html.is-booting, html.is-booting body { overflow: hidden; }
   -webkit-backdrop-filter: blur(14px) saturate(1.15);
   backdrop-filter: blur(14px) saturate(1.15);
 }
+.nav__brand {
+  display: none;
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  color: var(--ink);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nav__brand sup { font-size: 8px; letter-spacing: 0; vertical-align: super; }
 .nav__links {
   display: flex;
   align-items: center;
@@ -2466,8 +2479,10 @@ html.is-booting, html.is-booting body { overflow: hidden; }
 }
 
 @media (max-width: 1020px) {
+  .nav__brand { display: block; }
   .nav__links { display: none; }
   .menu-btn { display: block; }
+  .nav__actions { margin-left: auto; }
   .nav__actions .btn--sm { display: none; }
   .hero { min-height: max(780px, calc(100svh - 74px)); }
   .hero__name { font-size: clamp(72px, 10vw, 110px); }
@@ -2475,39 +2490,65 @@ html.is-booting, html.is-booting body { overflow: hidden; }
   .hero__ice { width: min(var(--w), 260px); }
   .section-head--split { grid-template-columns: 1fr; gap: 20px; }
   .section-head__lede--right { margin-left: 0; }
-  .how { height: auto; }
-  .how__pin { position: static; height: auto; display: block; overflow: visible; }
+  .how { height: 760svh; }
+  .how__pin {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
   .how__left {
     width: 100%;
-    min-height: 56svh;
-    padding: 56px 24px;
+    height: auto;
+    min-height: 0;
+    flex: none;
+    padding: 18px 22px 0;
   }
-  .how__title { font-size: clamp(54px, 13vw, 84px); }
-  .how__progress { margin-top: 40px; }
-  .how__compact { display: block; }
-  .how__step {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 48px 24px;
+  .how__eyebrow { font-size: 11px; }
+  .how__title { margin-top: 8px; font-size: clamp(34px, 8vw, 62px); }
+  .how__title br { display: none; }
+  .how__lede { display: none; }
+  .how__progress { margin-top: 10px; }
+  .how__progress strong { font-size: 28px; }
+  .how__dots { margin-top: 8px; }
+  .how__reveal {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 42%;
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 22px;
   }
+  .how__copy { width: 100%; padding-left: 0; }
+  .how__count { font-size: 8px; }
+  .how__copy h3 { margin-top: 6px; font-size: clamp(20px, 5.2vw, 30px); }
+  .how__copy p { margin-top: 8px; font-size: clamp(11.5px, 3vw, 13px); line-height: 1.5; }
+  .how__modes { gap: 6px; margin-top: 10px; }
+  .how__mode { grid-template-columns: 66px 1fr; font-size: 10px; }
   .how__media {
     position: relative;
     top: auto;
     left: auto;
     width: 100%;
-    height: 44svh;
+    height: 46%;
+    flex: 1;
+    min-height: 0;
     transform: none;
     animation: none;
   }
-  .how__media--multi { width: 100%; }
+  .how__media--multi { width: 100%; top: auto; }
   .how__media--multi img {
     width: 100%;
     height: 100%;
     aspect-ratio: auto;
     object-fit: cover;
   }
-  .how__copy { padding-left: 0; }
+  .why__word { font-size: clamp(40px, 6.2vw, 66px); letter-spacing: 0.12em; }
+  .why__word--4 { font-size: clamp(48px, 7.4vw, 78px); }
   .anatomy__body { grid-template-columns: 1fr; }
   .anatomy__visual { position: relative; }
   .anatomy__list { margin-top: 10px; }
@@ -2563,7 +2604,12 @@ html.is-booting, html.is-booting body { overflow: hidden; }
   .melt { margin: 34px 0; }
   .melt__label strong { font-size: 24px; }
   .melt__track { height: 32px; }
-  .how__copy h3 { font-size: 34px; }
+  .how__copy h3 { font-size: clamp(20px, 5.2vw, 26px); }
+  .why__word { font-size: clamp(28px, 7vw, 40px); letter-spacing: 0.09em; }
+  .why__word--4 { font-size: clamp(32px, 8vw, 46px); }
+  .why__title { font-size: clamp(17px, 4.6vw, 22px); }
+  .why__lasts, .why__rime { font-size: 10.5px; line-height: 1.4; }
+  .why__content { gap: 5px; padding: 14px; }
   .part { grid-template-columns: 24px 1fr 8px; padding: 15px 0; }
   .part.is-active { padding-left: 4px; }
   .specs { gap: 14px; }

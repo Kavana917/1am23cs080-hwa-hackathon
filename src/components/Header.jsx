@@ -29,6 +29,9 @@ export function Nav() {
   return (
     <header className="nav" id="nav">
       <div className="nav__inner">
+        <a className="nav__brand" href="#top" aria-label="Rime home">
+          RIME<sup>™</sup>
+        </a>
         <nav className="nav__links" aria-label="Primary">
           <a href="#how">How it works</a>
           <a href="#design">Design</a>
