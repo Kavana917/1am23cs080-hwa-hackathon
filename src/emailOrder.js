@@ -125,6 +125,19 @@ export async function sendOrderConfirmation(order) {
   const messageText = `Hi ${safeName}, your Rime order ${order.id} is confirmed. ${summary} You'll pay cash when it arrives.`;
   const message = messageHtml;
 
+  const rawMoney = (value) => Number(value || 0).toLocaleString("en-IN");
+  const orders = items.map((item) => ({
+    image_url: productImage(item.sku),
+    name: item.name,
+    units: item.qty,
+    price: rawMoney(itemAmount(item)),
+  }));
+  const cost = {
+    shipping: order.shipping === 0 ? "Free" : rawMoney(order.shipping),
+    tax: "Included",
+    total: rawMoney(order.total),
+  };
+
   const templateParams = {
     to_email: customer.email,
     email: customer.email,
@@ -153,7 +166,11 @@ export async function sendOrderConfirmation(order) {
     total_price: money(order.total),
     total_amount: money(order.total),
     amount: money(order.total),
-    price: money(order.total),
+    price: rawMoney(order.total),
+    orders,
+    cost,
+    website_link: SITE_URL,
+    shipping_label: shippingLabel,
     items: itemsPlain,
     item_list: itemsPlain,
     order_items: itemsPlain,
