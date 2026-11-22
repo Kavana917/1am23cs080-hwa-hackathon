@@ -12,10 +12,6 @@ const SAFETY_POINTS = [
     body: "Watch how your dog uses Rime before leaving them alone with it.",
   },
   {
-    title: "Not for chewers",
-    body: "If your dog bites or tears silicone, use Rime only while you are there. Stop using any sleeve that is cut, torn or loose.",
-  },
-  {
     title: "Never give the rod to your dog",
     body: "The Chill Rod stays inside the sleeve and column at all times.",
   },
@@ -45,28 +41,13 @@ export function Safety() {
             Dog safety
           </p>
           <h2 className="h2" data-reveal style={{ "--d": "60ms" }}>
-            Safe for lickers.
+            Built for lickers.
             <br />
-            <em>Not for chewers.</em>
+            <em>Backed by care.</em>
           </h2>
         </div>
 
         <div className="safety__grid">
-          <aside className="safety__alert" data-reveal>
-            <span className="safety__alert-icon" aria-hidden="true">
-              <Icon name="warn" />
-            </span>
-            <div>
-              <span className="mono">Read before the first session</span>
-              <h3>Rime is a lick toy, not a chew toy.</h3>
-              <p>
-                Supervise the first few sessions. Never give the Chill Rod directly to your dog.
-                Stop using any sleeve that is torn, cut or loose, and replace it.
-              </p>
-            </div>
-            <span className="safety__seal mono">Lick · Sip · Repeat</span>
-          </aside>
-
           <ul className="safety__list" data-reveal style={{ "--d": "80ms" }}>
             {SAFETY_POINTS.map((point) => (
               <li key={point.title}>
@@ -244,15 +225,7 @@ export function Footer() {
       <div className="container">
         <div className="footer__top">
           <a className="brand brand--footer" href="#top" aria-label="Rime home">
-            <span className="brand__mark" aria-hidden="true">
-              <svg viewBox="0 0 32 32">
-                <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                <rect x="14.6" y="9" width="2.8" height="12" rx="1.4" fill="currentColor" />
-                <path d="M16 23.5c1.8 2 2.7 3.1 2.7 4.2a2.7 2.7 0 0 1-5.4 0c0-1.1.9-2.2 2.7-4.2Z" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="brand__word">RIME</span>
-            <sup>™</sup>
+            <span className="brand__letter" aria-hidden="true">R</span>
           </a>
           <span className="footer__tag">Hydration in its prime.</span>
         </div>
@@ -263,10 +236,6 @@ export function Footer() {
             <p>
               A frozen lick and hydration column for dogs. Sealed Chill Rod, sips on demand and a
               replaceable honeycomb sleeve — designed for a 3–4 hour session.
-            </p>
-            <p className="footer__safety">
-              <Icon name="warn" />
-              <span>Rime is a lick toy, not a chew toy. Supervise the first few sessions.</span>
             </p>
           </div>
 
@@ -308,7 +277,6 @@ export function Footer() {
           <span className="mono">© 2026 Rime — Concept store</span>
         </div>
       </div>
-      <div className="footer__word" aria-hidden="true">RIME</div>
     </footer>
   );
 }

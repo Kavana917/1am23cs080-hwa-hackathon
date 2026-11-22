@@ -8,10 +8,6 @@ const POINTS = [
     body: "Watch how your dog uses Rime for the first few sessions before leaving them alone with it.",
   },
   {
-    title: "Not for chewers.",
-    body: "If your dog bites, chews or tears at silicone, do not use Rime unattended. Stop use if the sleeve shows cuts, tears or loose pieces, and replace it.",
-  },
-  {
     title: "Never give the Chill Rod directly to your dog.",
     body: "The rod stays inside the sleeve and column at all times.",
   },
@@ -97,7 +93,7 @@ export function SafetyDialog() {
         <div className="safety-dialog__head">
           <div>
             <span className="mono">Dog safety guide</span>
-            <h2 id="safety-dialog-title">Safe for lickers. Not for chewers.</h2>
+            <h2 id="safety-dialog-title">Built for lickers. Backed by care.</h2>
           </div>
           <button
             className="icon-btn"
@@ -111,8 +107,8 @@ export function SafetyDialog() {
 
         <div className="safety-dialog__body">
           <p className="safety-dialog__intro">
-            <strong>Rime is a lick toy, not a chew toy.</strong> Read these ten points before the
-            first session, and keep the sleeve and rod in good condition.
+            <strong>A few simple habits.</strong> Read these points before the first session, and
+            keep the sleeve and rod in good condition.
           </p>
 
           <ol className="safety-dialog__list">

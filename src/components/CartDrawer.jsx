@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from "../context/StoreContext.jsx";
 import { COLORS, itemKey, money } from "../data.js";
 import { Icon } from "./Icon.jsx";
-import { TintedProduct } from "./TintedProduct.jsx";
+import { sendOrderConfirmation } from "../emailOrder.js";
 
 const EMPTY_FORM = {
   name: "",
@@ -196,15 +196,20 @@ function CartView({
           const colorName = item.color && COLORS[item.color] ? COLORS[item.color].name : null;
           return (
             <div className="cart-item" key={key}>
-              {product.kind === "column" || product.kind === "bundle" ? (
-                <div className="cart-item__thumb">
-                  <TintedProduct color={item.color || "glacier"} alt="" />
-                </div>
-              ) : (
-                <div className="cart-item__thumb cart-item__thumb--icon" aria-hidden="true">
-                  <Icon name={product.kind === "rod" ? "snow" : "hex"} />
-                </div>
-              )}
+              <div className="cart-item__thumb">
+                <img
+                  src={
+                    product.kind === "column" || product.kind === "bundle"
+                      ? "/assets/rime-hero.webp?v=20261122c"
+                      : product.kind === "rod"
+                        ? "/assets/chill-rod.webp?v=20261122c"
+                        : "/assets/sleeve-frost.webp?v=20261122c"
+                  }
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
 
               <div>
                 <div className="cart-item__top">
@@ -314,10 +319,6 @@ function CartView({
         </button>
       </div>
 
-      <p className="cart-safety">
-        <Icon name="warn" />
-        <span>Rime is a lick toy, not a chew toy. Supervise the first few sessions.</span>
-      </p>
     </>
   );
 }
@@ -354,6 +355,8 @@ function CheckoutView({
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentError, setPaymentError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const update = (field) => (event) => {
@@ -378,6 +381,12 @@ function CheckoutView({
       return;
     }
 
+    if (paymentMethod !== "cod") {
+      setPaymentError("Please choose cash on delivery to place your order.");
+      return;
+    }
+    setPaymentError("");
+
     setSubmitting(true);
     try {
       const response = await fetch("/api/orders", {
@@ -391,6 +400,7 @@ function CheckoutView({
           })),
           customer: form,
           shippingMethod,
+          paymentMethod: "cod",
         }),
       });
 
@@ -408,6 +418,7 @@ function CheckoutView({
       }
 
       completeOrder(payload.order);
+      void sendOrderConfirmation(payload.order);
     } catch (error) {
       setServerError(
         error.message ||
@@ -529,6 +540,34 @@ function CheckoutView({
         </label>
       </div>
 
+      <h3>Payment</h3>
+      <div className="payment-method" role="radiogroup" aria-label="Payment method">
+        <label
+          className={`payment-method__opt${paymentMethod === "cod" ? " is-selected" : ""}`}
+        >
+          <input
+            type="radio"
+            name="payment"
+            value="cod"
+            checked={paymentMethod === "cod"}
+            onChange={() => {
+              setPaymentMethod("cod");
+              setPaymentError("");
+            }}
+          />
+          <span className="payment-method__dot" aria-hidden="true" />
+          <span className="payment-method__text">
+            <strong>Cash on delivery</strong>
+            <small>Pay in cash when your order arrives. No card or UPI needed.</small>
+          </span>
+        </label>
+      </div>
+      {paymentError && (
+        <p className="payment-error" role="alert">
+          {paymentError}
+        </p>
+      )}
+
       <div className="checkout__summary">
         <div className="cart-summary__row">
           <span>{cart.reduce((sum, item) => sum + item.qty, 0)} items</span>
@@ -557,10 +596,6 @@ function CheckoutView({
         order and will not be charged or shipped.
       </p>
 
-      <p className="cart-safety">
-        <Icon name="warn" />
-        <span>Rime is a lick toy, not a chew toy. Supervise the first few sessions.</span>
-      </p>
     </form>
   );
 }
@@ -635,11 +670,6 @@ function SuccessView({ order, closeCart, catalog }) {
           <strong>{money(order.total)}</strong>
         </div>
       </div>
-
-      <p className="cart-safety" style={{ width: "100%", textAlign: "left" }}>
-        <Icon name="warn" />
-        <span>Rime is a lick toy, not a chew toy. Supervise the first few sessions.</span>
-      </p>
 
       <button className="btn btn--dark btn--full" type="button" onClick={closeCart}>
         Continue browsing <Icon name="arrow" />

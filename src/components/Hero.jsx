@@ -140,8 +140,8 @@ export function Hero() {
       const rect = hero.getBoundingClientRect();
       const nx = (event.clientX - rect.left) / rect.width - 0.5;
       const ny = (event.clientY - rect.top) / rect.height - 0.5;
-      targetX = -nx * 70;
-      targetY = -ny * 48;
+      targetX = -nx * 190;
+      targetY = -ny * 135;
       schedule();
     };
 

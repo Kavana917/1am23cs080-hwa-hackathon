@@ -10,6 +10,7 @@ import { Safety, Faq, FinalCta, Footer } from "./components/Story.jsx";
 import { Shop } from "./components/Shop.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { SafetyDialog, Toast } from "./components/Overlays.jsx";
+import { SectionDivider } from "./components/SectionDivider.jsx";
 
 function Site() {
   useEffect(() => {
@@ -84,15 +85,23 @@ function Site() {
 
       <main id="main">
         <Hero />
+        <SectionDivider />
         <HowItWorks />
+        <SectionDivider />
         <WhyBest />
+        <SectionDivider />
         <Anatomy />
+        <SectionDivider />
         <Safety />
+        <SectionDivider />
         <Shop />
+        <SectionDivider />
         <Faq />
+        <SectionDivider />
         <FinalCta />
       </main>
 
+      <SectionDivider />
       <Footer />
       <CartDrawer />
       <SafetyDialog />

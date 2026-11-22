@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useStore } from "../context/StoreContext.jsx";
 import { money, discountPercent } from "../data.js";
 import { Icon } from "./Icon.jsx";
-import { TintedProduct } from "./TintedProduct.jsx";
 
 function Price({ mrp, price, light = false }) {
   const save = mrp - price;
@@ -49,9 +48,9 @@ export function Shop() {
               Shop the launch edit
             </p>
             <h2 className="h2" data-reveal style={{ "--d": "60ms" }}>
-              Pick your
+              Buy the
               <br />
-              <em>size.</em>
+              <em>product.</em>
             </h2>
           </div>
           <p className="section-head__lede section-head__lede--right" data-reveal style={{ "--d": "120ms" }}>
@@ -61,16 +60,18 @@ export function Shop() {
         </div>
 
         <div className="shop__grid">
-          <article className="product-card" data-reveal>
+          <article className="product-card product-card--standard" data-reveal>
             <div className="product-card__media">
               <span className="product-card__badge mono">Launch price</span>
               <span className="product-card__size mono">18 oz / 530 ml</span>
               <div className="product-card__stage">
                 <span className="product-card__glow" aria-hidden="true" />
-                <TintedProduct
-                  className="tint-product--card"
-                  color={color}
+                <img
+                  className="product-card__product"
+                  src="/assets/rime-hero.webp?v=20261122c"
                   alt="Rime Standard column"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -98,16 +99,18 @@ export function Shop() {
             </div>
           </article>
 
-          <article className="product-card product-card--dark" data-reveal style={{ "--d": "80ms" }}>
+          <article className="product-card product-card--dark product-card--xl" data-reveal style={{ "--d": "80ms" }}>
             <div className="product-card__media">
               <span className="product-card__badge mono">Launch price</span>
               <span className="product-card__size mono">28 oz / 830 ml</span>
               <div className="product-card__stage">
                 <span className="product-card__glow" aria-hidden="true" />
-                <TintedProduct
-                  className="tint-product--card"
-                  color={color}
+                <img
+                  className="product-card__product"
+                  src="/assets/rime-hero.webp?v=20261122c"
                   alt="Rime XL column"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -168,9 +171,14 @@ export function Shop() {
 
           <div className="addons">
             <article className="addon" data-reveal style={{ "--d": "60ms" }}>
-              <span className="addon__icon" aria-hidden="true">
-                <Icon name="snow" />
-              </span>
+              <div className="addon__media">
+                <img
+                  src="/assets/chill-rod.webp?v=20261122c"
+                  alt="Spare sealed Chill Rod"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div className="addon__body">
                 <h3>Spare Sealed Chill Rod</h3>
                 <p>Keep one frozen and ready for the next session.</p>
@@ -191,9 +199,14 @@ export function Shop() {
             </article>
 
             <article className="addon" data-reveal style={{ "--d": "120ms" }}>
-              <span className="addon__icon" aria-hidden="true">
-                <Icon name="hex" />
-              </span>
+              <div className="addon__media addon__media--sleeve">
+                <img
+                  src="/assets/sleeve-frost.webp?v=20261122c"
+                  alt="Replacement honeycomb sleeve"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div className="addon__body">
                 <h3>Replacement Honeycomb Sleeve</h3>
                 <p>A fresh sleeve when one wears out. Standard or XL fit.</p>

@@ -167,7 +167,7 @@ export function HowItWorks() {
     <section ref={section} className="how" id="how" aria-label="How to use Rime">
       <div className={`how__pin ${compact ? "is-compact" : ""}`}>
         <div className="how__left">
-          <span className="how__eyebrow mono">02 — The routine</span>
+          <span className="how__eyebrow mono">The routine</span>
           <h2 className="how__title">
             How
             <br />
