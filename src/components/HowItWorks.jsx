@@ -185,7 +185,11 @@ export function HowItWorks() {
           </div>
         </div>
 
-        <div className="how__reveal" style={theme(active)} key={active}>
+        <div
+          className={`how__reveal${STEPS[active].modes ? " how__reveal--multi" : ""}`}
+          style={theme(active)}
+          key={active}
+        >
           <StepCopy step={STEPS[active]} index={active} />
         </div>
         <StepMedia step={STEPS[active]} key={`media-${active}`} />
