@@ -202,10 +202,12 @@ export function HowItWorks() {
             ))}
           </div>
         ) : (
-          <div className="how__reveal" style={theme(active)} key={active}>
-            <StepMedia step={STEPS[active]} />
-            <StepCopy step={STEPS[active]} index={active} />
-          </div>
+          <>
+            <div className="how__reveal" style={theme(active)} key={active}>
+              <StepCopy step={STEPS[active]} index={active} />
+            </div>
+            <StepMedia step={STEPS[active]} key={`media-${active}`} />
+          </>
         )}
       </div>
     </section>
