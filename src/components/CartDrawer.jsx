@@ -38,6 +38,7 @@ export function CartDrawer() {
 
   const dialogRef = useRef(null);
   const closeTimer = useRef(null);
+  const [emailStatus, setEmailStatus] = useState("idle");
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -127,11 +128,17 @@ export function CartDrawer() {
               setShippingMethod={setShippingMethod}
               setView={setView}
               completeOrder={completeOrder}
+              setEmailStatus={setEmailStatus}
             />
           )}
 
           {view === "success" && (
-            <SuccessView order={lastOrder} closeCart={closeCart} catalog={catalog} />
+            <SuccessView
+              order={lastOrder}
+              closeCart={closeCart}
+              catalog={catalog}
+              emailStatus={emailStatus}
+            />
           )}
         </div>
       </div>
@@ -351,6 +358,7 @@ function CheckoutView({
   setShippingMethod,
   setView,
   completeOrder,
+  setEmailStatus,
 }) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
@@ -417,8 +425,10 @@ function CheckoutView({
         );
       }
 
+      sendOrderConfirmation(payload.order).then((emailResult) => {
+        setEmailStatus(emailResult.sent ? "sent" : "failed");
+      });
       completeOrder(payload.order);
-      void sendOrderConfirmation(payload.order);
     } catch (error) {
       setServerError(
         error.message ||
@@ -614,7 +624,7 @@ function Field({ id, label, error, full = false, ...props }) {
 /* Success                                                             */
 /* ------------------------------------------------------------------ */
 
-function SuccessView({ order, closeCart, catalog }) {
+function SuccessView({ order, closeCart, catalog, emailStatus }) {
   if (!order) {
     return (
       <div className="cart-empty">
@@ -637,6 +647,16 @@ function SuccessView({ order, closeCart, catalog }) {
         Your order number is <strong>#{order.id}</strong>. We&rsquo;ll email your tracking details
         when it ships.
       </p>
+      {emailStatus === "sent" && (
+        <p className="email-status email-status--ok">
+          A confirmation email has been sent to {order.customer?.email}.
+        </p>
+      )}
+      {emailStatus === "failed" && (
+        <p className="email-status email-status--error">
+          We couldn&rsquo;t send the confirmation email. Please note your order number above.
+        </p>
+      )}
 
       <span className="success__order">
         Order <strong>{order.id}</strong>

@@ -55,6 +55,7 @@ export async function sendOrderConfirmation(order) {
     });
     return { sent: true };
   } catch (error) {
+    console.warn("Rime: order confirmation email failed —", error?.message || error);
     return { sent: false, reason: error?.message || "send-failed" };
   }
 }
