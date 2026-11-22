@@ -1102,30 +1102,25 @@ a { color: inherit; text-decoration: none; }
 .how {
   position: relative;
   height: 620svh;
-  background: var(--frost);
+  background: var(--oxblood-deep);
 }
 .how__pin {
   position: sticky;
   top: 0;
   height: 100svh;
+  display: flex;
   overflow: hidden;
 }
-.how__inner {
-  width: 100%;
-  max-width: var(--container);
+.how__left {
+  position: relative;
+  z-index: 2;
+  width: 38%;
   height: 100%;
-  margin-inline: auto;
-  padding: 96px var(--pad) 44px;
-  display: grid;
-  grid-template-columns: 0.9fr 1.22fr 1fr;
-  gap: clamp(16px, 2.2vw, 36px);
-}
-.how__rail {
+  flex: none;
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  padding: clamp(28px, 3vw, 52px);
-  border-radius: var(--radius);
+  justify-content: center;
+  padding: clamp(40px, 5vw, 90px);
   background: var(--oxblood-deep);
   color: var(--bone);
 }
@@ -1169,92 +1164,66 @@ a { color: inherit; text-decoration: none; }
 }
 .how__dot.is-done { background: rgba(127, 208, 220, 0.5); }
 .how__dot.is-active { width: 38px; background: var(--ice-bright); }
-.how__gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: clamp(6px, 0.8vw, 12px);
-  min-height: 0;
-}
-.how__thumb {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  object-fit: cover;
-  border-radius: 4px;
-  background: var(--oxblood);
-}
-.how__panel {
-  position: relative;
-  min-height: 0;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--frost-2);
-  transition: background 0.75s var(--ease), color 0.75s var(--ease);
-}
-.how-card {
+.how__reveal {
   position: absolute;
-  inset: 0;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 38%;
+  right: 0;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  align-items: center;
+  padding: clamp(40px, 5vw, 90px) clamp(28px, 4vw, 70px);
+  animation: how-merge 0.78s var(--ease-out) both;
+}
+@keyframes how-merge {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.how__media {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: clamp(26px, 3vw, 52px);
-  opacity: 0;
-  transform: translateX(105%);
-  transition: none;
-  pointer-events: none;
+  gap: clamp(6px, 1vw, 14px);
+  height: min(68vh, 640px);
+  min-width: 0;
 }
-.how-card.is-active {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  transition: transform 0.65s var(--ease-out), opacity 0.4s var(--ease);
+.how__media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
-.how-card__num { color: var(--ice-deep); font-size: 9px; }
-.how-card h3 {
+.how__media--multi img { width: 31%; }
+.how__copy { min-width: 0; padding-left: clamp(12px, 2vw, 36px); }
+.how__count { display: block; opacity: 0.6; font-size: 9px; }
+.how__copy h3 {
   margin-top: 14px;
   font-family: var(--display);
-  font-size: clamp(26px, 2.6vw, 40px);
+  font-size: clamp(28px, 3vw, 48px);
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.04em;
 }
-.how-card p {
-  margin-top: 16px;
-  color: var(--muted);
-  font-size: clamp(12px, 1.05vw, 14px);
-  line-height: 1.7;
+.how__copy p {
+  margin-top: 18px;
+  font-size: clamp(13px, 1.05vw, 15px);
+  line-height: 1.75;
+  opacity: 0.9;
 }
-.how-card__modes { display: grid; gap: 8px; margin-top: 18px; }
-.how-mode {
+.how__modes { display: grid; gap: 10px; margin-top: 20px; }
+.how__mode {
   display: grid;
-  grid-template-columns: 46px 1fr;
-  column-gap: 10px;
-  row-gap: 2px;
-  align-items: center;
-  padding: 6px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.35);
+  grid-template-columns: 88px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 11px;
+  line-height: 1.5;
 }
-.how-mode img {
-  grid-row: 1 / span 2;
-  width: 46px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-.how-mode__label { color: var(--ice-deep); font-size: 9px; }
-.how-mode__body { color: var(--muted); font-size: 10px; line-height: 1.5; }
-.how.is-merged .how__panel { background: var(--oxblood-deep); color: var(--bone); }
-.how.is-merged .how-card p,
-.how.is-merged .how-mode__body { color: rgba(248, 241, 229, 0.72); }
-.how.is-merged .how-card__num,
-.how.is-merged .how-mode__label { color: var(--ice-bright); }
-.how.is-merged .how-mode {
-  border-color: var(--line-light);
-  background: rgba(248, 241, 229, 0.07);
-}
+.how__mode-label { font-size: 9px; text-transform: uppercase; }
+.how__compact { display: none; }
 /* =========================================================
    ANATOMY
    ========================================================= */
@@ -2602,7 +2571,7 @@ a { color: inherit; text-decoration: none; }
 .hero__word, .footer__word { font-weight: 600; letter-spacing: -0.05em; }
 .marquee__track span { font-weight: 300; letter-spacing: -0.02em; }
 .melt__label strong { font-weight: 500; letter-spacing: -0.035em; }
-.how-card h3 { font-weight: 500; letter-spacing: -0.04em; }
+.how__copy h3 { font-weight: 500; letter-spacing: -0.04em; }
 .bento__card h3 { font-weight: 500; letter-spacing: -0.04em; }
 .t-node h3 { font-weight: 500; letter-spacing: -0.035em; }
 .safety__alert h3 { font-weight: 500; letter-spacing: -0.045em; }
@@ -2641,37 +2610,24 @@ a { color: inherit; text-decoration: none; }
   .section-head--split { grid-template-columns: 1fr; gap: 20px; }
   .section-head__lede--right { margin-left: 0; }
   .how { height: auto; }
-  .how__pin { position: static; height: auto; overflow: visible; }
-  .how__inner {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    height: auto;
-    padding-block: 64px 48px;
-  }
-  .how__rail {
-    min-height: 44svh;
-    padding: clamp(32px, 7vw, 56px);
+  .how__pin { position: static; height: auto; display: block; overflow: visible; }
+  .how__left {
+    width: 100%;
+    min-height: 56svh;
+    padding: 56px 24px;
   }
   .how__title { font-size: clamp(54px, 13vw, 84px); }
-  .how__progress { margin-top: 36px; }
-  .how__gallery { grid-auto-rows: 20svh; }
-  .how__panel { overflow: visible; background: transparent; }
-  .how-card {
-    position: relative;
-    inset: auto;
-    min-height: 0;
-    padding: 32px 0;
-    border-top: 1px solid var(--line);
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
+  .how__progress { margin-top: 40px; }
+  .how__compact { display: block; }
+  .how__step {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 48px 24px;
   }
-  .how-card.is-active { transition: none; }
-  .how.is-merged .how__panel { background: transparent; }
-  .how.is-merged .how-card p,
-  .how.is-merged .how-mode__body { color: var(--muted); }
-  .how.is-merged .how-card__num,
-  .how.is-merged .how-mode__label { color: var(--ice-deep); }
+  .how__media { height: 44svh; }
+  .how__media--multi img { width: 30%; }
+  .how__copy { padding-left: 0; }
   .anatomy__body { grid-template-columns: 1fr; }
   .anatomy__visual { position: relative; }
   .anatomy__list { margin-top: 10px; }
@@ -2736,7 +2692,7 @@ a { color: inherit; text-decoration: none; }
   .melt { margin: 34px 0; }
   .melt__label strong { font-size: 24px; }
   .melt__track { height: 32px; }
-  .how-card h3 { font-size: 34px; }
+  .how__copy h3 { font-size: 34px; }
   .part { grid-template-columns: 24px 1fr 8px; padding: 15px 0; }
   .part.is-active { padding-left: 4px; }
   .specs { gap: 14px; }
